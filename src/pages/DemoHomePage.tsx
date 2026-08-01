@@ -1,9 +1,10 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Badge, Group, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
+import { Anchor, Badge, Button, Group, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
 import type { Bundle, Condition, MedicationRequest, Patient, Practitioner, Resource } from '@medplum/fhirtypes';
 import { Document } from '@medplum/react';
 import type { JSX } from 'react';
+import { Link } from 'react-router';
 import bundleJson from '../../synthetic-stroke-patient-bundle.json';
 
 const bundle = bundleJson as Bundle;
@@ -20,13 +21,39 @@ export function DemoHomePage(): JSX.Element {
       <Stack gap="xl">
         <Group justify="space-between" align="flex-start">
           <Stack gap={4}>
-            <Title order={2}>{formatPatientName(patient)}</Title>
-            <Text c="dimmed">Synthetic FHIR R4 patient record</Text>
+            <Title order={2}>Medplum Demo Dashboard</Title>
+            <Text c="dimmed">No-login frontend showing the synthetic FHIR R4 patient fixture.</Text>
           </Stack>
-          <Badge variant="light" color="blue" size="lg">
-            Local demo
-          </Badge>
+          <Group>
+            <Button component={Link} to="/connect" variant="light">
+              Connect Medplum
+            </Button>
+            <Button component="a" href="https://app.medplum.com/" target="_blank" rel="noreferrer">
+              Open Backend
+            </Button>
+          </Group>
         </Group>
+
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
+          <SummaryItem label="Frontend" value="Public demo" />
+          <SummaryItem label="Backend" value="Medplum hosted" />
+          <SummaryItem label="Auth" value="Off for demo" />
+          <SummaryItem label="Data Source" value="Local Bundle JSON" />
+        </SimpleGrid>
+
+        <Paper withBorder p="md" radius="sm">
+          <Stack gap="xs">
+            <Group justify="space-between" align="flex-start">
+              <Stack gap={2}>
+                <Title order={3}>{formatPatientName(patient)}</Title>
+                <Text c="dimmed">Synthetic patient summary</Text>
+              </Stack>
+              <Badge variant="light" color="blue" size="lg">
+                Local demo data
+              </Badge>
+            </Group>
+          </Stack>
+        </Paper>
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
           <SummaryItem label="Birth Date" value={patient.birthDate ?? 'Unknown'} />
@@ -113,6 +140,12 @@ export function DemoHomePage(): JSX.Element {
             </Text>
             <Text size="sm" c="dimmed">
               After Medplum import, Medplum generates the real Patient ID.
+            </Text>
+            <Text size="sm">
+              Backend dashboard:{' '}
+              <Anchor href="https://app.medplum.com/" target="_blank" rel="noreferrer">
+                app.medplum.com
+              </Anchor>
             </Text>
           </Stack>
         </Paper>

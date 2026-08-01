@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
 import { AppShell, ErrorBoundary, Loading } from '@medplum/react';
-import { IconSearch, IconUser } from '@tabler/icons-react';
+import { IconLayoutDashboard, IconPlugConnected, IconSearch } from '@tabler/icons-react';
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { PatientHistory } from './components/PatientHistory';
 import { PatientOverview } from './components/PatientOverview';
 import { Timeline } from './components/Timeline';
+import { ConnectMedplumPage } from './pages/ConnectMedplumPage';
 import { DemoHomePage } from './pages/DemoHomePage';
 import { PatientPage } from './pages/PatientPage';
 import { ResourcePage } from './pages/ResourcePage';
@@ -20,7 +21,10 @@ export function App(): JSX.Element | null {
       menus={[
         {
           title: 'My Links',
-          links: [{ icon: <IconUser />, label: 'Patients', href: '/' }],
+          links: [
+            { icon: <IconLayoutDashboard />, label: 'Dashboard', href: '/' },
+            { icon: <IconPlugConnected />, label: 'Connect Medplum', href: '/connect' },
+          ],
         },
       ]}
     >
@@ -28,6 +32,8 @@ export function App(): JSX.Element | null {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<DemoHomePage />} />
+            <Route path="/dashboard" element={<Navigate to="/" replace />} />
+            <Route path="/connect" element={<ConnectMedplumPage />} />
             <Route path="/medplum" element={<Navigate to="/" replace />} />
             <Route path="/signin" element={<Navigate to="/" replace />} />
             <Route path="/reset-password" element={<Navigate to="/" replace />} />
