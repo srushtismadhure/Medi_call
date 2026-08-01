@@ -13,6 +13,7 @@ import { App } from './App';
 const medplum = new MedplumClient({
   onUnauthenticated: () => (window.location.href = '/'),
   baseUrl: import.meta.env.MEDPLUM_BASE_URL,
+  clientId: import.meta.env.MEDPLUM_CLIENT_ID,
 });
 
 const theme = createTheme({

@@ -9,6 +9,7 @@ import { PatientHistory } from './components/PatientHistory';
 import { PatientOverview } from './components/PatientOverview';
 import { Timeline } from './components/Timeline';
 import { ConnectMedplumPage } from './pages/ConnectMedplumPage';
+import { ConnectedEhrPage } from './pages/ConnectedEhrPage';
 import { DemoHomePage } from './pages/DemoHomePage';
 import { PatientPage } from './pages/PatientPage';
 import { ResourcePage } from './pages/ResourcePage';
@@ -22,7 +23,8 @@ export function App(): JSX.Element | null {
         {
           title: 'My Links',
           links: [
-            { icon: <IconLayoutDashboard />, label: 'Dashboard', href: '/' },
+            { icon: <IconLayoutDashboard />, label: 'Connected EHR', href: '/' },
+            { icon: <IconLayoutDashboard />, label: 'Static Demo', href: '/demo' },
             { icon: <IconPlugConnected />, label: 'Connect Medplum', href: '/connect' },
           ],
         },
@@ -31,7 +33,8 @@ export function App(): JSX.Element | null {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<DemoHomePage />} />
+            <Route path="/" element={<ConnectedEhrPage />} />
+            <Route path="/demo" element={<DemoHomePage />} />
             <Route path="/dashboard" element={<Navigate to="/" replace />} />
             <Route path="/connect" element={<ConnectMedplumPage />} />
             <Route path="/medplum" element={<Navigate to="/" replace />} />

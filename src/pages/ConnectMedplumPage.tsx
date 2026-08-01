@@ -22,7 +22,10 @@ export function ConnectMedplumPage(): JSX.Element {
               <List.Item>Your Medplum project in the hosted backend dashboard.</List.Item>
               <List.Item>A ClientApplication resource for this frontend.</List.Item>
               <List.Item>
-                The frontend app URL added as an allowed redirect/origin: <Code>https://medi-call-psi.vercel.app</Code>
+                This exact URL in the ClientApplication redirect URIs: <Code>https://medi-call-psi.vercel.app</Code>
+              </List.Item>
+              <List.Item>
+                This exact URL in allowed origins, if that field is shown: <Code>https://medi-call-psi.vercel.app</Code>
               </List.Item>
               <List.Item>
                 The ClientApplication ID copied into <Code>MEDPLUM_CLIENT_ID</Code>.
@@ -41,6 +44,10 @@ export function ConnectMedplumPage(): JSX.Element {
             <Text>
               That is where Medplum stores the real FHIR resources. This React app is just the frontend that can read
               them once auth is configured.
+            </Text>
+            <Text>
+              After you import the Bundle in Medplum Batch, the Connected EHR page reads Patient, Condition, and
+              MedicationRequest resources from that backend.
             </Text>
           </Stack>
         </Paper>
