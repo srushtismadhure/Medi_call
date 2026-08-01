@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 import { Anchor, Badge, Button, Group, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
 import type { Bundle, Condition, MedicationRequest, Patient, Practitioner, Resource } from '@medplum/fhirtypes';
-import { Document } from '@medplum/react';
 import type { JSX } from 'react';
 import { Link } from 'react-router';
 import bundleJson from '../../synthetic-stroke-patient-bundle.json';
+import classes from './ConnectedEhrPage.module.css';
 
 const bundle = bundleJson as Bundle;
 const patientEntry = getEntryResource<Patient>('Patient');
@@ -17,22 +17,28 @@ const medicationRequests = getEntryResources<MedicationRequest>('MedicationReque
 
 export function DemoHomePage(): JSX.Element {
   return (
-    <Document>
-      <Stack gap="xl">
-        <Group justify="space-between" align="flex-start">
-          <Stack gap={4}>
-            <Title order={2}>Medplum Demo Dashboard</Title>
-            <Text c="dimmed">No-login frontend showing the synthetic FHIR R4 patient fixture.</Text>
+    <Stack className={classes.page} gap="xl">
+      <Paper className={classes.heroPanel}>
+        <Group justify="space-between" align="flex-start" gap="lg">
+          <Stack gap={8}>
+            <Badge className={classes.eyebrow} variant="light">
+              Static fixture
+            </Badge>
+            <Title className={classes.pageTitle} order={1}>
+              Medplum Demo Dashboard
+            </Title>
+            <Text className={classes.subtitle}>No-login frontend showing the synthetic FHIR R4 patient fixture.</Text>
           </Stack>
           <Group>
-            <Button component={Link} to="/connect" variant="light">
-              Connect Medplum
+            <Button component={Link} to="/" className={classes.primaryButton}>
+              Connected EHR
             </Button>
             <Button component="a" href="https://app.medplum.com/" target="_blank" rel="noreferrer">
               Open Backend
             </Button>
           </Group>
         </Group>
+      </Paper>
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
           <SummaryItem label="Frontend" value="Public demo" />
@@ -41,14 +47,16 @@ export function DemoHomePage(): JSX.Element {
           <SummaryItem label="Data Source" value="Local Bundle JSON" />
         </SimpleGrid>
 
-        <Paper withBorder p="md" radius="sm">
+        <Paper className={classes.panelCard}>
           <Stack gap="xs">
             <Group justify="space-between" align="flex-start">
               <Stack gap={2}>
-                <Title order={3}>{formatPatientName(patient)}</Title>
+                <Title className={classes.panelTitle} order={3}>
+                  {formatPatientName(patient)}
+                </Title>
                 <Text c="dimmed">Synthetic patient summary</Text>
               </Stack>
-              <Badge variant="light" color="blue" size="lg">
+              <Badge className={classes.statusBadge} variant="light" size="lg">
                 Local demo data
               </Badge>
             </Group>
@@ -62,14 +70,18 @@ export function DemoHomePage(): JSX.Element {
           <SummaryItem label="MRN" value={patient.identifier?.[0]?.value ?? 'Unknown'} />
         </SimpleGrid>
 
-        <Paper withBorder p="md" radius="sm">
+        <Paper className={classes.panelCard}>
           <Stack gap="md">
             <Group justify="space-between">
-              <Title order={3}>Conditions</Title>
-              <Badge variant="outline">{conditions.length}</Badge>
+              <Title className={classes.panelTitle} order={3}>
+                Conditions
+              </Title>
+              <Badge className={classes.countBadge} variant="outline">
+                {conditions.length}
+              </Badge>
             </Group>
             <Table.ScrollContainer minWidth={680}>
-              <Table striped highlightOnHover>
+              <Table className={classes.dataTable} striped highlightOnHover>
                 <Table.Thead>
                   <Table.Tr>
                     <Table.Th>Condition</Table.Th>
@@ -93,14 +105,18 @@ export function DemoHomePage(): JSX.Element {
           </Stack>
         </Paper>
 
-        <Paper withBorder p="md" radius="sm">
+        <Paper className={classes.panelCard}>
           <Stack gap="md">
             <Group justify="space-between">
-              <Title order={3}>Medication Requests</Title>
-              <Badge variant="outline">{medicationRequests.length}</Badge>
+              <Title className={classes.panelTitle} order={3}>
+                Medication Requests
+              </Title>
+              <Badge className={classes.countBadge} variant="outline">
+                {medicationRequests.length}
+              </Badge>
             </Group>
             <Table.ScrollContainer minWidth={860}>
-              <Table striped highlightOnHover>
+              <Table className={classes.dataTable} striped highlightOnHover>
                 <Table.Thead>
                   <Table.Tr>
                     <Table.Th>Medication</Table.Th>
@@ -129,9 +145,11 @@ export function DemoHomePage(): JSX.Element {
           </Stack>
         </Paper>
 
-        <Paper withBorder p="md" radius="sm">
+        <Paper className={classes.panelCard}>
           <Stack gap={4}>
-            <Title order={3}>FHIR Bundle</Title>
+            <Title className={classes.panelTitle} order={3}>
+              FHIR Bundle
+            </Title>
             <Text size="sm">
               Bundle type: <strong>{bundle.type}</strong>
             </Text>
@@ -150,13 +168,12 @@ export function DemoHomePage(): JSX.Element {
           </Stack>
         </Paper>
       </Stack>
-    </Document>
   );
 }
 
 function SummaryItem(props: { readonly label: string; readonly value: string }): JSX.Element {
   return (
-    <Paper withBorder p="md" radius="sm">
+    <Paper className={classes.metricCard}>
       <Text size="xs" c="dimmed" tt="uppercase">
         {props.label}
       </Text>

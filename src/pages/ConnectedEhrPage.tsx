@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Alert, Badge, Button, Group, Loader, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
+import { Alert, Badge, Box, Button, Group, Loader, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
 import { normalizeErrorString } from '@medplum/core';
 import type { Condition, MedicationRequest, Patient } from '@medplum/fhirtypes';
-import { Document, useMedplum, useMedplumProfile } from '@medplum/react';
+import { useMedplum, useMedplumProfile } from '@medplum/react';
 import { IconAlertCircle } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
+import classes from './ConnectedEhrPage.module.css';
 
 const medplumClientId = import.meta.env.MEDPLUM_CLIENT_ID as string | undefined;
 
@@ -45,12 +46,12 @@ export function ConnectedEhrPage(): JSX.Element {
 
   if (authProcessing) {
     return (
-      <Document>
-        <Group>
+      <Box className={classes.page}>
+        <Group className={classes.loadingPanel}>
           <Loader size="sm" />
           <Text>Connecting to Medplum...</Text>
         </Group>
-      </Document>
+      </Box>
     );
   }
 
@@ -86,65 +87,74 @@ function ConnectPanel(props: { readonly authError?: string }): JSX.Element {
   }
 
   return (
-    <Document>
-      <Stack gap="lg">
-        <Group justify="space-between" align="flex-start">
-          <Stack gap={4}>
-            <Title order={2}>Connected EHR</Title>
-            <Text c="dimmed">Connect this frontend to your hosted Medplum backend.</Text>
+    <Stack className={classes.page} gap="lg">
+      <Paper className={classes.heroPanel}>
+        <Group justify="space-between" align="flex-start" gap="lg">
+          <Stack gap={8}>
+            <Badge className={classes.eyebrow} variant="light">
+              Hosted Medplum
+            </Badge>
+            <Title className={classes.pageTitle} order={1}>
+              Connected EHR
+            </Title>
+            <Text className={classes.subtitle}>Connect this frontend to your hosted Medplum backend.</Text>
           </Stack>
-          <Badge variant="light" color="green" size="lg">
-            Medplum backend
+          <Badge className={classes.statusBadge} variant="light">
+            Ready to connect
           </Badge>
         </Group>
+      </Paper>
 
-        {error && (
-          <Alert icon={<IconAlertCircle size={16} />} color="red" title="Could not connect">
-            {error}
-          </Alert>
-        )}
+      {error && (
+        <Alert icon={<IconAlertCircle size={16} />} color="red" title="Could not connect">
+          {error}
+        </Alert>
+      )}
 
-        <Paper withBorder p="md" radius="sm">
-          <Stack gap="md">
-            <Title order={3}>How The Two Interfaces Work</Title>
-            <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
-              <SummaryItem label="Backend Interface" value="app.medplum.com stores and manages FHIR resources." />
-              <SummaryItem label="EHR Frontend" value="This app reads those FHIR resources and displays them as an EHR." />
-            </SimpleGrid>
-            <Text>
-              To load real data here, first import the synthetic Bundle in Medplum Batch so the backend has Patient,
-              Condition, and MedicationRequest resources.
-            </Text>
-            <Group>
-              <Button onClick={() => connect()} loading={connecting}>
-                Connect to Medplum
-              </Button>
-              <Button component={Link} to="/demo" variant="light">
-                View Static Demo
-              </Button>
-              <Button component="a" href="https://app.medplum.com/" target="_blank" rel="noreferrer" variant="default">
-                Open Backend
-              </Button>
-            </Group>
-          </Stack>
-        </Paper>
+      <Paper className={classes.panelCard}>
+        <Stack gap="md">
+          <Title className={classes.panelTitle} order={3}>
+            How The Two Interfaces Work
+          </Title>
+          <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
+            <SummaryItem label="Backend Interface" value="app.medplum.com stores and manages FHIR resources." />
+            <SummaryItem label="EHR Frontend" value="This app reads those FHIR resources and displays them as an EHR." />
+          </SimpleGrid>
+          <Text className={classes.bodyText}>
+            To load real data here, first import the synthetic Bundle in Medplum Batch so the backend has Patient,
+            Condition, and MedicationRequest resources.
+          </Text>
+          <Group>
+            <Button className={classes.primaryButton} onClick={() => connect()} loading={connecting}>
+              Connect to Medplum
+            </Button>
+            <Button component={Link} to="/demo" variant="light">
+              View Static Demo
+            </Button>
+            <Button component="a" href="https://app.medplum.com/" target="_blank" rel="noreferrer" variant="default">
+              Open Backend
+            </Button>
+          </Group>
+        </Stack>
+      </Paper>
 
-        <Paper withBorder p="md" radius="sm">
-          <Stack gap="xs">
-            <Title order={3}>Connection Config</Title>
-            <Text size="sm">
-              API endpoint: <strong>{import.meta.env.MEDPLUM_BASE_URL}</strong>
-            </Text>
-            <Text size="sm">
-              Public ClientApplication ID: <strong>{medplumClientId || 'not configured'}</strong>
-            </Text>
-            <Text size="sm" c="dimmed">
-              No client secret is used in this browser frontend.
-            </Text>
-          </Stack>
-        </Paper>
-      </Stack>
-    </Document>
+      <Paper className={classes.panelCard}>
+        <Stack gap="xs">
+          <Title className={classes.panelTitle} order={3}>
+            Connection Config
+          </Title>
+          <Text size="sm">
+            API endpoint: <strong>{import.meta.env.MEDPLUM_BASE_URL}</strong>
+          </Text>
+          <Text size="sm">
+            Public ClientApplication ID: <strong>{medplumClientId || 'not configured'}</strong>
+          </Text>
+          <Text size="sm" c="dimmed">
+            No client secret is used in this browser frontend.
+          </Text>
+        </Stack>
+      </Paper>
+    </Stack>
   );
 }
 
@@ -251,12 +261,17 @@ function LiveEhrDashboard(): JSX.Element {
   );
 
   return (
-    <Document>
-      <Stack gap="xl">
-        <Group justify="space-between" align="flex-start">
-          <Stack gap={4}>
-            <Title order={2}>Connected EHR</Title>
-            <Text c="dimmed">Live FHIR data from your hosted Medplum backend.</Text>
+    <Stack className={classes.page} gap="xl">
+      <Paper className={classes.heroPanel}>
+        <Group justify="space-between" align="flex-start" gap="lg">
+          <Stack gap={8}>
+            <Badge className={classes.eyebrow} variant="light">
+              Live workspace
+            </Badge>
+            <Title className={classes.pageTitle} order={1}>
+              Connected EHR
+            </Title>
+            <Text className={classes.subtitle}>Live FHIR data from your hosted Medplum backend.</Text>
           </Stack>
           <Group>
             <Button component="a" href="https://app.medplum.com/" target="_blank" rel="noreferrer" variant="default">
@@ -267,123 +282,129 @@ function LiveEhrDashboard(): JSX.Element {
             </Button>
           </Group>
         </Group>
+      </Paper>
 
-        {error && (
-          <Alert icon={<IconAlertCircle size={16} />} color="red" title="Medplum read failed">
-            {error}
-          </Alert>
-        )}
+      {error && (
+        <Alert icon={<IconAlertCircle size={16} />} color="red" title="Medplum read failed">
+          {error}
+        </Alert>
+      )}
 
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
-          {counts.map((item) => (
-            <SummaryItem key={item.label} label={item.label} value={item.value} />
-          ))}
-        </SimpleGrid>
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
+        {counts.map((item) => (
+          <SummaryItem key={item.label} label={item.label} value={item.value} />
+        ))}
+      </SimpleGrid>
 
-        {loading && (
-          <Group>
-            <Loader size="sm" />
-            <Text>Loading backend data...</Text>
-          </Group>
-        )}
+      {loading && (
+        <Group className={classes.loadingPanel}>
+          <Loader size="sm" />
+          <Text>Loading backend data...</Text>
+        </Group>
+      )}
 
-        {!loading && !selectedPatient && (
-          <Paper withBorder p="md" radius="sm">
-            <Stack gap="sm">
-              <Title order={3}>No Patients Found</Title>
-              <Text>
-                Your Medplum project is connected, but the Patient table is empty. Import
-                <strong> synthetic-stroke-patient-bundle.json</strong> using Medplum Batch, then refresh this page.
-              </Text>
-              <Button component="a" href="https://app.medplum.com/Batch" target="_blank" rel="noreferrer" w="fit-content">
-                Open Medplum Batch
-              </Button>
+      {!loading && !selectedPatient && (
+        <Paper className={classes.panelCard}>
+          <Stack gap="sm">
+            <Title className={classes.panelTitle} order={3}>
+              No Patients Found
+            </Title>
+            <Text className={classes.bodyText}>
+              Your Medplum project is connected, but the Patient table is empty. Import
+              <strong> synthetic-stroke-patient-bundle.json</strong> using Medplum Batch, then refresh this page.
+            </Text>
+            <Button component="a" href="https://app.medplum.com/Batch" target="_blank" rel="noreferrer" w="fit-content">
+              Open Medplum Batch
+            </Button>
+          </Stack>
+        </Paper>
+      )}
+
+      {selectedPatient && (
+        <>
+          <Paper className={classes.panelCard}>
+            <Stack gap="md">
+              <Group justify="space-between" align="flex-start">
+                <Stack gap={2}>
+                  <Title className={classes.panelTitle} order={3}>
+                    {formatPatientName(selectedPatient)}
+                  </Title>
+                  <Text c="dimmed">{patientReference}</Text>
+                </Stack>
+                <Badge className={classes.statusBadge} variant="light">
+                  Live backend data
+                </Badge>
+              </Group>
+
+              {data && data.patients.length > 1 && (
+                <Table.ScrollContainer minWidth={680}>
+                  <Table className={classes.dataTable} striped highlightOnHover>
+                    <Table.Thead>
+                      <Table.Tr>
+                        <Table.Th>Patient</Table.Th>
+                        <Table.Th>Birth Date</Table.Th>
+                        <Table.Th>Gender</Table.Th>
+                        <Table.Th>Action</Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                      {data.patients.map((patient) => (
+                        <Table.Tr key={patient.id}>
+                          <Table.Td>{formatPatientName(patient)}</Table.Td>
+                          <Table.Td>{patient.birthDate}</Table.Td>
+                          <Table.Td>{patient.gender}</Table.Td>
+                          <Table.Td>
+                            <Button size="xs" variant="light" onClick={() => setSelectedPatientId(patient.id)}>
+                              View
+                            </Button>
+                          </Table.Td>
+                        </Table.Tr>
+                      ))}
+                    </Table.Tbody>
+                  </Table>
+                </Table.ScrollContainer>
+              )}
+
+              <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
+                <SummaryItem label="Birth Date" value={selectedPatient.birthDate ?? 'Unknown'} />
+                <SummaryItem label="Gender" value={selectedPatient.gender ?? 'Unknown'} />
+                <SummaryItem label="Language" value={selectedPatient.communication?.[0]?.language?.text ?? 'Unknown'} />
+                <SummaryItem label="MRN" value={selectedPatient.identifier?.[0]?.value ?? 'Unknown'} />
+              </SimpleGrid>
             </Stack>
           </Paper>
-        )}
 
-        {selectedPatient && (
-          <>
-            <Paper withBorder p="md" radius="sm">
-              <Stack gap="md">
-                <Group justify="space-between" align="flex-start">
-                  <Stack gap={2}>
-                    <Title order={3}>{formatPatientName(selectedPatient)}</Title>
-                    <Text c="dimmed">{patientReference}</Text>
-                  </Stack>
-                  <Badge variant="light" color="green" size="lg">
-                    Live backend data
-                  </Badge>
-                </Group>
+          <ResourceTableSection
+            title="Conditions"
+            count={data?.conditions.length ?? 0}
+            minWidth={680}
+            headers={['Condition', 'Clinical Status', 'Recorded', 'Subject']}
+            rows={(data?.conditions ?? []).map((condition) => [
+              condition.code?.text ?? condition.code?.coding?.[0]?.display ?? 'Unknown',
+              condition.clinicalStatus?.coding?.[0]?.display ?? condition.clinicalStatus?.coding?.[0]?.code ?? 'Unknown',
+              condition.recordedDate ?? '',
+              condition.subject?.reference ?? '',
+            ])}
+          />
 
-                {data && data.patients.length > 1 && (
-                  <Table.ScrollContainer minWidth={680}>
-                    <Table striped highlightOnHover>
-                      <Table.Thead>
-                        <Table.Tr>
-                          <Table.Th>Patient</Table.Th>
-                          <Table.Th>Birth Date</Table.Th>
-                          <Table.Th>Gender</Table.Th>
-                          <Table.Th>Action</Table.Th>
-                        </Table.Tr>
-                      </Table.Thead>
-                      <Table.Tbody>
-                        {data.patients.map((patient) => (
-                          <Table.Tr key={patient.id}>
-                            <Table.Td>{formatPatientName(patient)}</Table.Td>
-                            <Table.Td>{patient.birthDate}</Table.Td>
-                            <Table.Td>{patient.gender}</Table.Td>
-                            <Table.Td>
-                              <Button size="xs" variant="light" onClick={() => setSelectedPatientId(patient.id)}>
-                                View
-                              </Button>
-                            </Table.Td>
-                          </Table.Tr>
-                        ))}
-                      </Table.Tbody>
-                    </Table>
-                  </Table.ScrollContainer>
-                )}
-
-                <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="md">
-                  <SummaryItem label="Birth Date" value={selectedPatient.birthDate ?? 'Unknown'} />
-                  <SummaryItem label="Gender" value={selectedPatient.gender ?? 'Unknown'} />
-                  <SummaryItem label="Language" value={selectedPatient.communication?.[0]?.language?.text ?? 'Unknown'} />
-                  <SummaryItem label="MRN" value={selectedPatient.identifier?.[0]?.value ?? 'Unknown'} />
-                </SimpleGrid>
-              </Stack>
-            </Paper>
-
-            <ResourceTableSection
-              title="Conditions"
-              count={data?.conditions.length ?? 0}
-              minWidth={680}
-              headers={['Condition', 'Clinical Status', 'Recorded', 'Subject']}
-              rows={(data?.conditions ?? []).map((condition) => [
-                condition.code?.text ?? condition.code?.coding?.[0]?.display ?? 'Unknown',
-                condition.clinicalStatus?.coding?.[0]?.display ?? condition.clinicalStatus?.coding?.[0]?.code ?? 'Unknown',
-                condition.recordedDate ?? '',
-                condition.subject?.reference ?? '',
-              ])}
-            />
-
-            <ResourceTableSection
-              title="Medication Requests"
-              count={data?.medicationRequests.length ?? 0}
-              minWidth={860}
-              headers={['Medication', 'Sig', 'Status', 'RxNorm']}
-              rows={(data?.medicationRequests ?? []).map((request) => [
-                request.medicationCodeableConcept?.text ?? request.medicationCodeableConcept?.coding?.[0]?.display ?? 'Unknown',
-                request.dosageInstruction?.[0]?.text ?? '',
-                request.status ?? '',
-                request.medicationCodeableConcept?.coding?.[0]?.code ?? 'Uncoded',
-              ])}
-              footer="MedicationRequests represent what the EHR says was prescribed; they are not clinical recommendations."
-            />
-          </>
-        )}
-      </Stack>
-    </Document>
+          <ResourceTableSection
+            title="Medication Requests"
+            count={data?.medicationRequests.length ?? 0}
+            minWidth={860}
+            headers={['Medication', 'Sig', 'Status', 'RxNorm']}
+            rows={(data?.medicationRequests ?? []).map((request) => [
+              request.medicationCodeableConcept?.text ??
+                request.medicationCodeableConcept?.coding?.[0]?.display ??
+                'Unknown',
+              request.dosageInstruction?.[0]?.text ?? '',
+              request.status ?? '',
+              request.medicationCodeableConcept?.coding?.[0]?.code ?? 'Uncoded',
+            ])}
+            footer="MedicationRequests represent what the EHR says was prescribed; they are not clinical recommendations."
+          />
+        </>
+      )}
+    </Stack>
   );
 }
 
@@ -396,14 +417,18 @@ function ResourceTableSection(props: {
   readonly footer?: string;
 }): JSX.Element {
   return (
-    <Paper withBorder p="md" radius="sm">
+    <Paper className={classes.panelCard}>
       <Stack gap="md">
         <Group justify="space-between">
-          <Title order={3}>{props.title}</Title>
-          <Badge variant="outline">{props.count}</Badge>
+          <Title className={classes.panelTitle} order={3}>
+            {props.title}
+          </Title>
+          <Badge className={classes.countBadge} variant="outline">
+            {props.count}
+          </Badge>
         </Group>
         <Table.ScrollContainer minWidth={props.minWidth}>
-          <Table striped highlightOnHover>
+          <Table className={classes.dataTable} striped highlightOnHover>
             <Table.Thead>
               <Table.Tr>
                 {props.headers.map((header) => (
@@ -439,11 +464,11 @@ function ResourceTableSection(props: {
 
 function SummaryItem(props: { readonly label: string; readonly value: string }): JSX.Element {
   return (
-    <Paper withBorder p="md" radius="sm">
+    <Paper className={classes.metricCard}>
       <Text size="xs" c="dimmed" tt="uppercase">
         {props.label}
       </Text>
-      <Text fw={600}>{props.value}</Text>
+      <Text fw={700}>{props.value}</Text>
     </Paper>
   );
 }

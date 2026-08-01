@@ -1,0 +1,106 @@
+.shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(245, 247, 252, 0.96), rgba(238, 242, 249, 0.96)),
+    #f4f6fb;
+}
+
+.navbar {
+  border-right: 1px solid #e2e7f0;
+  background: #ffffff;
+  box-shadow: 14px 0 30px rgba(38, 51, 77, 0.05);
+}
+
+.main {
+  min-height: 100vh;
+  background: transparent;
+}
+
+.content {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 28px 52px;
+}
+
+.brandBlock {
+  padding: 26px 22px 18px;
+}
+
+.logoMark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+  border-radius: 8px;
+  box-shadow: 0 12px 22px rgba(95, 80, 203, 0.26);
+}
+
+.workspaceCard {
+  margin: 0 16px 18px;
+  padding: 14px;
+  border: 1px solid #e5eaf3;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.projectIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #0f766e;
+  background: #e6f7f2;
+  border-radius: 8px;
+}
+
+.navScroll {
+  flex: 1;
+}
+
+.navLabel {
+  margin: 4px 4px 6px;
+  color: #8a94a8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  color: #536079;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.navLink:hover {
+  color: #212a3d;
+  background: #f3f6fb;
+}
+
+.activeNavLink {
+  color: #4f46e5;
+  background: #f0efff;
+  box-shadow: inset 0 0 0 1px #dedbff;
+}
+
+@media (max-width: 48em) {
+  .content {
+    padding: 20px 14px 40px;
+  }
+
+  .navbar {
+    display: none;
+  }
+}
