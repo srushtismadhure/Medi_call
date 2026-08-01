@@ -78,7 +78,7 @@ function ConnectPanel(props: { readonly authError?: string }): JSX.Element {
     try {
       await medplum.signInWithRedirect({
         clientId: medplumClientId,
-        scope: 'openid profile offline_access',
+        scope: 'openid profile',
       });
     } catch (err) {
       setError(normalizeErrorString(err));
