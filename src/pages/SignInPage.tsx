@@ -13,6 +13,7 @@ export function SignInPage(): JSX.Element {
       // Configure according to your settings
       googleClientId={import.meta.env.GOOGLE_CLIENT_ID}
       onSuccess={() => navigate('/')?.catch(console.error)}
+      onForgotPassword={() => navigate('/reset-password')}
       clientId={import.meta.env.MEDPLUM_CLIENT_ID}
     >
       <IconSearch size={32} stroke={2} aria-label="Search" />
