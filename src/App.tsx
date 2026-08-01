@@ -8,8 +8,8 @@ import { Route, Routes } from 'react-router';
 import { PatientHistory } from './components/PatientHistory';
 import { PatientOverview } from './components/PatientOverview';
 import { Timeline } from './components/Timeline';
+import { DemoHomePage } from './pages/DemoHomePage';
 import { HomePage } from './pages/HomePage';
-import { LandingPage } from './pages/LandingPage';
 import { PatientPage } from './pages/PatientPage';
 import { ResourcePage } from './pages/ResourcePage';
 import { ResourceCreatePage } from './pages/ResourceCreatePage';
@@ -37,7 +37,8 @@ export function App(): JSX.Element | null {
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={profile ? <HomePage /> : <LandingPage />} />
+            <Route path="/" element={<DemoHomePage />} />
+            <Route path="/medplum" element={profile ? <HomePage /> : <SignInPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/Patient/new" element={<ResourceCreatePage />} />

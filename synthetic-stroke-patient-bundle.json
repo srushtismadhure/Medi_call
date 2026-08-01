@@ -1,0 +1,494 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:patient-srushti-madhure-demo",
+      "resource": {
+        "resourceType": "Patient",
+        "identifier": [
+          {
+            "system": "https://demo.example.org/mrn",
+            "value": "DEMO-MRN-1001"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Madhure",
+            "given": ["Srushti"]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1948-04-12",
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "es",
+                  "display": "Spanish"
+                }
+              ],
+              "text": "Spanish"
+            },
+            "preferred": true
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:practitioner-demo-requester",
+      "resource": {
+        "resourceType": "Practitioner",
+        "identifier": [
+          {
+            "system": "https://demo.example.org/practitioner-id",
+            "value": "DEMO-PRACT-1001"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "family": "Rivera",
+            "given": ["Elena"],
+            "prefix": ["Dr."]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Practitioner"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-history-ischemic-stroke",
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "inactive",
+              "display": "Inactive"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "problem-list-item",
+                "display": "Problem List Item"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "History of ischemic stroke"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "onsetDateTime": "2021-02-14",
+        "recordedDate": "2026-08-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-post-stroke-aphasia",
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active",
+              "display": "Active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "problem-list-item",
+                "display": "Problem List Item"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "Post-stroke aphasia"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "onsetDateTime": "2021-02-14",
+        "recordedDate": "2026-08-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-dysarthria",
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active",
+              "display": "Active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "problem-list-item",
+                "display": "Problem List Item"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "Dysarthria"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "onsetDateTime": "2021-02-14",
+        "recordedDate": "2026-08-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:condition-post-stroke-depression",
+      "resource": {
+        "resourceType": "Condition",
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active",
+              "display": "Active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed",
+              "display": "Confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/condition-category",
+                "code": "problem-list-item",
+                "display": "Problem List Item"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "text": "Post-stroke depression"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "onsetDateTime": "2021-03-20",
+        "recordedDate": "2026-08-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medicationrequest-sertraline-50mg",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "312941",
+              "display": "sertraline 50 MG Oral Tablet"
+            }
+          ],
+          "text": "Sertraline 50 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "authoredOn": "2026-08-01",
+        "requester": {
+          "reference": "urn:uuid:practitioner-demo-requester"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take one tablet by mouth once daily",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "text": "By mouth"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "tablet",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "{tbl}"
+                }
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "Synthetic medication-reconciliation fixture only; not a clinical recommendation."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medicationrequest-atorvastatin-40mg",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "617311",
+              "display": "atorvastatin 40 MG Oral Tablet"
+            }
+          ],
+          "text": "Atorvastatin 40 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "authoredOn": "2026-08-01",
+        "requester": {
+          "reference": "urn:uuid:practitioner-demo-requester"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take one tablet by mouth nightly",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "text": "By mouth"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "tablet",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "{tbl}"
+                }
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "Synthetic medication-reconciliation fixture only; not a clinical recommendation."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medicationrequest-lisinopril-10mg",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "314076",
+              "display": "lisinopril 10 MG Oral Tablet"
+            }
+          ],
+          "text": "Lisinopril 10 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "authoredOn": "2026-08-01",
+        "requester": {
+          "reference": "urn:uuid:practitioner-demo-requester"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take one tablet by mouth once daily",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "text": "By mouth"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "tablet",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "{tbl}"
+                }
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "Synthetic medication-reconciliation fixture only; not a clinical recommendation."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medicationrequest-aspirin-81mg",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "243670",
+              "display": "aspirin 81 MG Oral Tablet"
+            }
+          ],
+          "text": "Aspirin 81 mg tablet"
+        },
+        "subject": {
+          "reference": "urn:uuid:patient-srushti-madhure-demo"
+        },
+        "authoredOn": "2026-08-01",
+        "requester": {
+          "reference": "urn:uuid:practitioner-demo-requester"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take one tablet by mouth once daily",
+            "timing": {
+              "repeat": {
+                "frequency": 1,
+                "period": 1,
+                "periodUnit": "d"
+              }
+            },
+            "route": {
+              "text": "By mouth"
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "tablet",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "{tbl}"
+                }
+              }
+            ]
+          }
+        ],
+        "note": [
+          {
+            "text": "Synthetic medication-reconciliation fixture only; not a clinical recommendation."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    }
+  ]
+}
